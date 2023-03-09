@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-center">Edit Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label position="floating">Name</ion-label>
+    <ion-input [(ngModel)]="nameVal"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Email</ion-label>
+    <ion-input [(ngModel)]="emailVal"></ion-input>
+  </ion-item>
+
+  <!-- <ion-item>
+    <ion-label stacked>Vencimento</ion-label>
+    <ion-datetime displayFormat="DD/MM/YYYY" name="duedate" min="2017" max="2020-12-31" [(ngModel)]="model.duedate">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Categoria</ion-label>
+    <ion-select name="category_id" [(ngModel)]="model.category_id">
+      <ion-select-option *ngFor="let category of categories" value="{{ category.id }}">
+        {{ category.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>-->
+
+  <ion-button shape="round" (click)="save()">
+    <ion-icon name="save"></ion-icon>
+  </ion-button>
+</ion-content>

@@ -1,20 +1,49 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border" [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title class="text-center">
+      AgProdutos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-searchbar (ionInput)="filterProducts($event)" [(ngModel)]="searchText"></ion-searchbar>
+  <ion-list>
+    <ion-item-sliding *ngFor="let p of test.Product; let index">
+      <ion-item lines="inset" button [routerLink]="[ '/product', p.user_id]">
+        <ion-label>
+          <h2><strong>{{ p.name }}</strong></h2>
+          <h2>{{ p.email }}</h2>
+          <!-- <h2>{{ p.duedate | date:'dd/MM/yyyy' }}</h2>
+          <h2 class="price">{{ p.price | currency:'BRL':true }}</h2> -->
+        </ion-label>
+      </ion-item>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" expandable (click)="remove(p.user_id)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addProduct()">
+      <ion-icon color="light" name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <p>Total: {{ test.Product.length }}</p>
+    <ion-list>
+      <ion-item no-lines>
+        <ion-label>Listar inativos</ion-label>
+        <ion-toggle name="listarInativos" [(ngModel)]="onlyInactives" (ionChange)="getAllProducts()">
+        </ion-toggle>
+      </ion-item>
+    </ion-list>
+  </ion-toolbar>
+</ion-footer>
