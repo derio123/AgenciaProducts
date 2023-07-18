@@ -22,25 +22,25 @@ export class DatabaseService {
   }
 
   databaseConn() {
-    this.platform.ready().then(() => {
+    return this.platform.ready().then(() => {
       this.sq.create({
         name: this.db_name,
-        location: 'default'
-      }).then((sqLite: SQLiteObject) => {
-        this.dbInstance = sqLite;
-        sqLite.executeSql(`
-              CREATE TABLE IF NOT EXISTS ${this.db_table} (
+        location: 'default',
+      }).then((sqL: SQLiteObject) => {
+        this.dbInstance = sqL;
+        sqL.executeSql(`CREATE TABLE IF NOT EXISTS ${this.db_table} (
                 user_id INTEGER PRIMARY KEY, 
                 name varchar(255),
                 email varchar(255)
               )`, [])
-          .then(async (res) => {
-            (await this.toast.create({
-              message: 'Tabelas criadas.',
-              duration: 3000,
-              position: 'bottom'
-            })).present();
-          })
+          .then(
+            async (res) => {
+              (await this.toast.create({
+                message: 'Tabelas criadas.',
+                duration: 3000,
+                position: 'bottom'
+              })).present();
+            })
           .catch(async (error) => {
             (await this.toast.create({
               message: 'Erro criar as tabelas.',
@@ -54,7 +54,7 @@ export class DatabaseService {
   }
 
   additem(n, e,) {
-      if(!n.length || !e.length) {
+    if (!n.length || !e.length) {
       alert('Provide both email e name');
       return;
     }
@@ -67,7 +67,7 @@ export class DatabaseService {
       });
   }
 
-  updateUser(id, name, email ) {
+  updateUser(id, name, email) {
     let data = [name, email];
     return this.dbInstance
       .executeSql(`UPDATE ${this.db_table} SET name = ?, email = ? WHERE user_id = ${id}`, data);
